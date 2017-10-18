@@ -118,6 +118,7 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == REQUEST_CODE_CHEAT && resultCode == RESULT_OK) {
             if (data != null) {
                 mIsCheaters[mCurrentIndex] = CheatActivity.wasAnswerShown(data);
