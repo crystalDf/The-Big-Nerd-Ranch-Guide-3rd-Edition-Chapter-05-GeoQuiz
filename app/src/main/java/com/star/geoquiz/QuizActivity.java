@@ -17,8 +17,11 @@ public class QuizActivity extends AppCompatActivity {
     private static final String KEY_QUESTIONS_ANSWERED = "questionsAnswered";
     private static final String KEY_ALL_QUESTIONS_ANSWERED = "allQuestionsAnswered";
     private static final String KEY_IS_CHEATERS = "isCheater";
+    private static final String KEY_CHEAT_LEFT_TIMES = "cheatLeftTimes";
 
     private static final int REQUEST_CODE_CHEAT = 0;
+
+    private static final int CHEAT_TIMES = 3;
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -32,6 +35,8 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextImageButton;
 
     private Button mCheatButton;
+
+    private TextView mCheatLeftTimesTextView;
 
     private Question[] mQuestionBank = new Question[] {
             new Question(R.string.question_australia, true),
@@ -50,6 +55,8 @@ public class QuizActivity extends AppCompatActivity {
     private boolean[] mQuestionsAnswered = new boolean[mQuestionBank.length];
     private boolean mAllQuestionsAnswered;
 
+    private int mCheatLeftTimes = CHEAT_TIMES;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,7 @@ public class QuizActivity extends AppCompatActivity {
             mAllQuestionsAnswered = savedInstanceState.getBoolean(KEY_ALL_QUESTIONS_ANSWERED);
 
             mIsCheaters = (boolean[]) savedInstanceState.getSerializable(KEY_IS_CHEATERS);
+            mCheatLeftTimes = savedInstanceState.getInt(KEY_CHEAT_LEFT_TIMES);
         }
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -92,6 +100,8 @@ public class QuizActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE_CHEAT);
         });
 
+        mCheatLeftTimesTextView = (TextView) findViewById(R.id.cheat_left_times_text_view);
+
         updateQuestion();
     }
 
@@ -103,6 +113,7 @@ public class QuizActivity extends AppCompatActivity {
         outState.putBooleanArray(KEY_QUESTIONS_ANSWERED, mQuestionsAnswered);
         outState.putBoolean(KEY_ALL_QUESTIONS_ANSWERED, mAllQuestionsAnswered);
         outState.putBooleanArray(KEY_IS_CHEATERS, mIsCheaters);
+        outState.putInt(KEY_CHEAT_LEFT_TIMES, mCheatLeftTimes);
     }
 
     @Override
@@ -110,6 +121,8 @@ public class QuizActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CHEAT && resultCode == RESULT_OK) {
             if (data != null) {
                 mIsCheaters[mCurrentIndex] = CheatActivity.wasAnswerShown(data);
+                mCheatLeftTimes--;
+                updateQuestion();
             }
         }
     }
@@ -142,9 +155,11 @@ public class QuizActivity extends AppCompatActivity {
         int questionResId = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(questionResId);
 
+        mCheatLeftTimesTextView.setText(getString(R.string.cheat_left_times, mCheatLeftTimes));
+
         mTrueButton.setEnabled(!mQuestionsAnswered[mCurrentIndex]);
         mFalseButton.setEnabled(!mQuestionsAnswered[mCurrentIndex]);
-        mCheatButton.setEnabled(!mQuestionsAnswered[mCurrentIndex]);
+        mCheatButton.setEnabled((!mIsCheaters[mCurrentIndex]) && (mCheatLeftTimes > 0));
 
         mPrevButton.setEnabled(!mAllQuestionsAnswered);
         mNextButton.setEnabled(!mAllQuestionsAnswered);

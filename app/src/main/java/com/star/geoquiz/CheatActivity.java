@@ -48,7 +48,7 @@ public class CheatActivity extends AppCompatActivity {
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
-        mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
+        mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
 
         mShowAnswerButton = (Button) findViewById(R.id.show_answer_button);
         mShowAnswerButton.setOnClickListener(v -> {

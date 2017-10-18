@@ -32,11 +32,24 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/cheat_button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cheat_button"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cheat_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cheat_button"/>
+
+        <TextView
+            android:id="@+id/cheat_left_times_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="CheatLeftTimes"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
