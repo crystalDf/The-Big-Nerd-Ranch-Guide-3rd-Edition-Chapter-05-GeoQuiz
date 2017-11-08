@@ -72,35 +72,35 @@ public class QuizActivity extends AppCompatActivity {
             mCheatLeftTimes = savedInstanceState.getInt(KEY_CHEAT_LEFT_TIMES);
         }
 
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mQuestionTextView = findViewById(R.id.question_text_view);
         mQuestionTextView.setOnClickListener(v -> getNextQuestion());
 
-        mTrueButton = (Button) findViewById(R.id.true_button);
+        mTrueButton = findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(v -> checkAnswer(true));
 
-        mFalseButton = (Button) findViewById(R.id.false_button);
+        mFalseButton = findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(v -> checkAnswer(false));
 
-        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton = findViewById(R.id.next_button);
         mNextButton.setOnClickListener(v -> getNextQuestion());
 
-        mPrevButton = (Button) findViewById(R.id.prev_button);
+        mPrevButton = findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(v -> getPrevQuestion());
 
-        mNextImageButton = (ImageButton) findViewById(R.id.next_image_button);
+        mNextImageButton = findViewById(R.id.next_image_button);
         mNextImageButton.setOnClickListener(v -> getNextQuestion());
 
-        mPrevImageButton = (ImageButton) findViewById(R.id.prev_image_button);
+        mPrevImageButton = findViewById(R.id.prev_image_button);
         mPrevImageButton.setOnClickListener(v -> getPrevQuestion());
 
-        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton = findViewById(R.id.cheat_button);
         mCheatButton.setOnClickListener(v -> {
             boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
             Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
             startActivityForResult(intent, REQUEST_CODE_CHEAT);
         });
 
-        mCheatLeftTimesTextView = (TextView) findViewById(R.id.cheat_left_times_text_view);
+        mCheatLeftTimesTextView = findViewById(R.id.cheat_left_times_text_view);
 
         updateQuestion();
     }
